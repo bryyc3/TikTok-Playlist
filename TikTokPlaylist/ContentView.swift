@@ -6,16 +6,19 @@
 //
 
 import SwiftUI
+import AVKit
+import AVFoundation
 
 struct ContentView: View {
+    @State private var player = AVPlayer()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        VideoPlayer(player: player)
+            .onAppear{
+                let url = URL(fileURLWithPath: Bundle.main.path(forResource: "self-torture", ofType: "mov")!)
+                player = AVPlayer(url : url)
+                player.play()
+            }
     }
 }
 
