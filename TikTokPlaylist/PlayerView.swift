@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct PlayerView: UIViewRepresentable {
-    let tikTokVideo: String
+    let player: AVPlayer
+    
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
     }
     func makeUIView(context: Context) -> UIView {
-        return PlayerUIView(tikTokName: tikTokVideo)
+        return PlayerUIView(player: player)
     }
 }

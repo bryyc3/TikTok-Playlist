@@ -10,16 +10,11 @@ import AVKit
 
 class PlayerUIView: UIView{
     let playerLayer = AVPlayerLayer()
-    let name: String
     
 
-    required init(tikTokName: String){
-        name = tikTokName
+    init(player: AVPlayer){
         super.init(frame: CGRect.zero)
         
-        
-        let url = URL(fileURLWithPath: Bundle.main.path(forResource: name, ofType: "mov")!)
-        let player = AVPlayer(url: url)
         player.play()
         
         playerLayer.player = player

@@ -7,22 +7,14 @@
 
 import SwiftUI
 import AVKit
-import AVFoundation
 
 struct ContentView: View {
-    @State var displayControls = false
+    
     let PlaylistVideos = ["bones-jones", "self-torture", "fight-club"]
     
     var body: some View {
-        ZStack{
-            PlayerView(tikTokVideo: PlaylistVideos[0])
-                .onTapGesture {
-                    displayControls = !displayControls
-                }
-            if displayControls{
-                VideoControlsView()
-            }
-        }
+        let player = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: PlaylistVideos[2], ofType: "mov")!))
+        PlayerContainerView(player: player)
     }
 }
 
