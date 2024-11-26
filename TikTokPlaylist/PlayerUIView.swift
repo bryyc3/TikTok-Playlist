@@ -7,6 +7,7 @@
 
 import UIKit
 import AVKit
+import AVFoundation
 
 class PlayerUIView: UIView{
     let playerLayer = AVPlayerLayer()
@@ -14,11 +15,8 @@ class PlayerUIView: UIView{
 
     init(player: AVPlayer){
         super.init(frame: CGRect.zero)
-        
-        player.play()
-        
-        playerLayer.player = player
-        layer.addSublayer(playerLayer)
+       
+        playerSetup(player: player)
     }
     
     required init?(coder: NSCoder){
@@ -28,5 +26,27 @@ class PlayerUIView: UIView{
     override func layoutSubviews() {
         super.layoutSubviews()
         playerLayer.frame = bounds
-      }
+    }
+    
+    private func playerSetup(player: AVPlayer) {
+            playerLayer.player = player
+            player.actionAtItemEnd = .none
+            layer.addSublayer(playerLayer)
+            
+            self.setObserver()
+            player.play()
+        
+    }
+        
+        func setObserver() {
+            NotificationCenter.default.removeObserver(self)
+            NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: playerLayer.player?.currentItem)
+        }
+        
+        @objc func playerItemDidReachEnd(notification: Notification) {
+            if let playerItem = notification.object as? AVPlayerItem {
+                playerItem.seek(to: .zero, completionHandler: nil)
+                self.playerLayer.player?.play()
+            }
+        }
 }

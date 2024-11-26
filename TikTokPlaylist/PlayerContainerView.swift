@@ -9,18 +9,17 @@ import SwiftUI
 import AVKit
 
 struct PlayerContainerView: View {
-    let player: AVPlayer
+    @Binding var player: PlayerModel
     @State var displayControls = false
-    @State var paused = false
     
     var body: some View {
         ZStack{
-            PlayerView(player: player)
+            PlayerView(player: $player.player)
                 .onTapGesture {
                     displayControls = !displayControls
                 }
             if displayControls{
-                VideoControlsView(player: player, paused: $paused)
+                VideoControlsView(player: $player)
             }
         }
     }

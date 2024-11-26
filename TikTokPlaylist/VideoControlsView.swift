@@ -9,32 +9,28 @@ import SwiftUI
 import AVKit
 
 struct VideoControlsView: View {
-    let player: AVPlayer
-    @Binding var paused: Bool
+    @Binding var player: PlayerModel
     
     var body: some View {
         HStack(spacing: 20){
-            
             Button{
-                print("Play")
+                player.PreviousVideo()
             } label: {
                 VideoControlButton(button: "backward.fill", size: 40.0)
             }
+            
             Button{
-                paused = !paused
-                if paused{
-                    player.pause()
-                }else{
-                    player.play()
-                }
+                player.TogglePause()
             } label: {
-                VideoControlButton(button: paused ? "play.fill" : "pause.fill", size: 40.0)
+                VideoControlButton(button: player.paused ? "play.fill" : "pause.fill", size: 40.0)
             }
+            
             Button{
-                print("Play")
+                player.NextVideo()
             } label: {
                 VideoControlButton(button: "forward.fill", size: 40.0)
             }
+            
             Button{
                 print("Play")
             } label: {

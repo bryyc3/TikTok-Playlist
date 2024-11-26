@@ -9,11 +9,14 @@ import SwiftUI
 import AVKit
 
 struct PlayerView: UIViewRepresentable {
-    let player: AVPlayer
+    @Binding var player: AVPlayer
     
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
-    }
-    func makeUIView(context: Context) -> UIView {
+    func makeUIView(context: Context) -> PlayerUIView {
         return PlayerUIView(player: player)
     }
+    func updateUIView(_ uiView: PlayerUIView, context: UIViewRepresentableContext<PlayerView>) {
+            uiView.playerLayer.player = player
+            
+            uiView.setObserver()
+        }
 }

@@ -16,6 +16,11 @@
 			path = TikTokPlaylist;
 			sourceTree = "<group>";
 		};
+		7AB552702CF64CC700066033 /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +39,7 @@
 			children = (
 				7A3A40252CEBFC8700D763AD /* TikTokPlaylist */,
 				7A3A40242CEBFC8700D763AD /* Products */,
+				7AB552702CF64CC700066033 /* Models */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +68,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				7A3A40252CEBFC8700D763AD /* TikTokPlaylist */,
+				7AB552702CF64CC700066033 /* Models */,
 			);
 			name = TikTokPlaylist;
 			packageProductDependencies = (
