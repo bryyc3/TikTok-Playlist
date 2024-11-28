@@ -30,12 +30,22 @@ struct VideoControlsView: View {
             } label: {
                 VideoControlButton(button: "forward.fill", size: 40.0)
             }
-            
-            Button{
-                print("Play")
-            } label: {
-                VideoControlButton(button: "repeat", size: 40.0)
+            VStack{
+                Button{
+                    player.ReplayVideo()
+                } label: {
+                    VideoControlButton(button: "repeat", size: 40.0)
+                }
+                if player.replayCount > 0{
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .frame(width: 5.0, height: 5.0)
+                        .foregroundColor(Color(#colorLiteral(red: 0.6962038279, green: 0.6962038279, blue: 0.6962037683, alpha: 0.7347630381)))
+                    Text("\(player.replayCount)")
+                        .foregroundColor(Color(#colorLiteral(red: 0.6962038279, green: 0.6962038279, blue: 0.6962037683, alpha: 0.7347630381)))
+                }
             }
+            
         }
     }
 }

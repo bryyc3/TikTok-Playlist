@@ -9,14 +9,21 @@ import UIKit
 import AVKit
 import AVFoundation
 
+protocol PlayerUIViewDelegate{
+    func replayPlayer()
+    func autoPlay()
+}
+
 class PlayerUIView: UIView{
     let playerLayer = AVPlayerLayer()
+    var playerModel: PlayerModel
+    var delegate: PlayerUIViewDelegate?
     
-
-    init(player: AVPlayer){
+    var count = 3
+    init(playerModel: PlayerModel){
+        self.playerModel = playerModel
         super.init(frame: CGRect.zero)
-       
-        playerSetup(player: player)
+        playerSetup(player: playerModel.player)
     }
     
     required init?(coder: NSCoder){
@@ -33,20 +40,29 @@ class PlayerUIView: UIView{
             player.actionAtItemEnd = .none
             layer.addSublayer(playerLayer)
             
-            self.setObserver()
             player.play()
         
     }
         
-        func setObserver() {
-            NotificationCenter.default.removeObserver(self)
-            NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: playerLayer.player?.currentItem)
+    func setObserver() {
+       NotificationCenter.default.removeObserver(self)
+       NotificationCenter.default.addObserver(self, selector: #selector(playNextPlayerItem(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: playerLayer.player?.currentItem)
+    }//when the video finishes play the next video
+    
+    func setReplayObserver() {
+       NotificationCenter.default.removeObserver(self)
+       NotificationCenter.default.addObserver(self, selector: #selector(repeatPlayerItem(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: playerLayer.player?.currentItem)
+    }//when the video finishes replay the video
+    
+   
+    @objc func repeatPlayerItem(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: .zero, completionHandler: nil)
+            self.playerLayer.player?.play()
+            delegate?.replayPlayer()
         }
-        
-        @objc func playerItemDidReachEnd(notification: Notification) {
-            if let playerItem = notification.object as? AVPlayerItem {
-                playerItem.seek(to: .zero, completionHandler: nil)
-                self.playerLayer.player?.play()
-            }
-        }
+    }//replay the video
+   @objc func playNextPlayerItem(notification: Notification) {
+       delegate?.autoPlay()
+   }//play next video
 }

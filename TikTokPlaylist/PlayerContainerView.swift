@@ -14,7 +14,7 @@ struct PlayerContainerView: View {
     
     var body: some View {
         ZStack{
-            PlayerView(player: $player.player)
+            PlayerView(player: $player)
                 .onTapGesture {
                     displayControls = !displayControls
                 }
